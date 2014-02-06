@@ -4,7 +4,7 @@
 <p>Once your game is authenticated, you now have access to the game’s and user’s scores. The library also makes it extremely easy to save the score to Facebook and to share or post it to the user’s wall.</p>
 <p><strong>Main classes : </strong></p>
 <ol>
-  	<li><strong>FacebookForGames</strong> - ahdnles the authentication and login all under the hood.</li>
+  	<li><strong>FacebookForGames</strong> - handles the authentication and login all under the hood.</li>
     <li><strong>ShareManager</strong> - Allows you to post the the users wall or open a share lnk popup.</li><li><strong>ScoreManager</strong> - Allows you to get the scores for the game for the user and the user's frinds. Also allows you to save the user's score.</li>
     <li><strong>FacebookGameModel</strong> - Holds all the pertinent session, user and game data.</li>
 </ol>
