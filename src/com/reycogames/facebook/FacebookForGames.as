@@ -49,7 +49,7 @@ package com.reycogames.facebook
 			FacebookGameModel.PERMISSIONS 	= permissions;
 			
 			FacebookForGames.onInitSuccess 	= onInitSuccess;
-			FacebookForGames.onInitFail 		= onInitFail;
+			FacebookForGames.onInitFail 	= onInitFail;
 			
 			Facebook.init( FacebookGameModel.APP_ID, handleIinit )
 		}
