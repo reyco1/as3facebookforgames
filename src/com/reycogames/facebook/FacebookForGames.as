@@ -21,8 +21,9 @@ package com.reycogames.facebook
 		
 		public static var onInitSuccess:Function;
 		public static var onInitFail:Function;
+		public static var onGetPermissions:Function;
 		
-		public static function authenticate(appID:String, appSecret:String, permissions:Array = null, onInitSuccess:Function = null, onInitFail:Function = null):void
+		public static function authenticate(appID:String, appSecret:String, permissions:Array = null, onInitSuccess:Function = null, onInitFail:Function = null, onGetPermissions:Function = null):void
 		{
 			Security.loadPolicyFile(FacebookGameModel.API_SECURED_PATH   + "/crossdomain.xml");
 			Security.loadPolicyFile(FacebookGameModel.API_UNSECURED_PATH + "/crossdomain.xml");
@@ -48,8 +49,9 @@ package com.reycogames.facebook
 			FacebookGameModel.APP_SECRET 	= appSecret;
 			FacebookGameModel.PERMISSIONS 	= permissions;
 			
-			FacebookForGames.onInitSuccess 	= onInitSuccess;
-			FacebookForGames.onInitFail 	= onInitFail;
+			FacebookForGames.onInitSuccess 		= onInitSuccess;
+			FacebookForGames.onInitFail 		= onInitFail;
+			FacebookForGames.onGetPermissions 	= onGetPermissions;
 			
 			Facebook.init( FacebookGameModel.APP_ID, handleIinit )
 		}
@@ -108,6 +110,11 @@ package com.reycogames.facebook
 		
 		private static function handleGotPermissions( response:Object ):void
 		{
+			if(onGetPermissions != null)
+			{
+				onGetPermissions.call();
+			}
+			
 			if( response )
 			{
 				var perms:* = response.body.data[0];

@@ -1,21 +1,30 @@
 package com.reycogames.facebook.data
 {
-	import com.facebook.graph.Facebook;
-
-	public class PostToWallProperties
+	public class PostToWallProperties extends Object
 	{
 		public var message		: String = "";
 		public var link			: String = "";
 		public var name			: String = "";
 		public var description	: String = "";
 		public var picture		: String = "";
-		
-		// do not edit
-		public var access_token	: String = "";
+		public var accesstoken	: String = "";
+		public var caption		: String = "";
 		
 		public function PostToWallProperties()
 		{
-			access_token = Facebook.getAuthResponse().accessToken;
+		}
+		
+		public function toObject():Object
+		{
+			var obj:Object 	= {};
+			obj.message 	= message;
+			obj.link 		= link;
+			obj.name 		= name;
+			obj.description = description;
+			obj.picture 	= picture;
+			obj.accesstoken = accesstoken;
+			obj.caption 	= caption;
+			return obj;
 		}
 	}
 }

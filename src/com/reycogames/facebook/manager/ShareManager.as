@@ -2,6 +2,7 @@ package com.reycogames.facebook.manager
 {
 	import com.facebook.graph.Facebook;
 	import com.reycogames.facebook.data.PostToWallProperties;
+	import com.reycogames.facebook.model.FacebookGameModel;
 	
 	import flash.external.ExternalInterface;
 	import flash.net.URLRequest;
@@ -19,7 +20,7 @@ package com.reycogames.facebook.manager
 			if(onPostFail != null) 
 				ShareManager.onPostFail = onPostFail;
 			
-			Facebook.api( "/me/feed", handleShareComplete, properties, "POST" );
+			Facebook.api( "/"+ FacebookGameModel.currentUser.id +"/feed", handleShareComplete, properties.toObject(), "POST" );
 		}
 		
 		private static function handleShareComplete( response:Object, fail:Object ):void
