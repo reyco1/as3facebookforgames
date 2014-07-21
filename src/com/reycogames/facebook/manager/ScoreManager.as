@@ -28,7 +28,7 @@ package com.reycogames.facebook.manager
 			if(onGetScoresFail != null) 
 				ScoreManager.onGetScoresFail = onGetScoresFail;
 			
-			Facebook.api( "/" + FacebookGameModel.currentUser.id + "/scores", handleGetUserScoreRequest);
+			Facebook.api( "/" + FacebookGameModel.USER.id + "/scores", handleGetUserScoreRequest);
 		}
 		
 		private static function handleGetUserScoreRequest( response:Object, fail:Object ):void

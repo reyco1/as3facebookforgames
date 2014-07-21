@@ -13,6 +13,8 @@ package com.reycogames.facebook.model
 		public static var USER_ACCESS_TOKEN:String		= "";
 		public static var PERMISSIONS:Array				= null;
 		
-		public static var currentUser:FacebookUser		= null;
+		public static var USER:FacebookUser		= null;
+		public static var CURRENCY_DETAILS:Object		= null;
+		public static var FRIENDS:Array					= null;
 	}
 }

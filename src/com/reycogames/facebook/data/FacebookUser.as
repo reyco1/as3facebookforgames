@@ -17,6 +17,7 @@ package com.reycogames.facebook.data
 		public var verified:Boolean; 
 		public var work:Array; 
 		public var imageUrl:String;
+		public var user_currency:String;
 		
 		public function FacebookUser( userData:Object )
 		{

@@ -9,12 +9,16 @@ package com.reycogames.facebook
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.system.Security;
+	import flash.utils.getTimer;
 	import flash.utils.setTimeout;
 
 	public class FacebookForGames
 	{
-		private static var appAccessTokenPath:String = "https://graph.facebook.com/oauth/access_token?client_id={ID}&client_secret={SECRET}&grant_type=client_credentials";
+		private static var appAccessTokenPath:String 	= "https://graph.facebook.com/oauth/access_token?client_id={ID}&client_secret={SECRET}&grant_type=client_credentials";
+		private static var currencyRequestnPath:String 	= "https://graph.facebook.com/{USER_ID}?fields=currency&access_token={USER_ACCESS_TOKEN}";
+		
 		private static var appAccesTokenLoader:URLLoader;
+		private static var currencyLoader:URLLoader;
 		
 		public static var autoLogIn:Boolean = true;
 		public static var loggedIn:Boolean	= false;
@@ -22,6 +26,8 @@ package com.reycogames.facebook
 		public static var onInitSuccess:Function;
 		public static var onInitFail:Function;
 		public static var onGetPermissions:Function;
+		public static var onPurchaseVerify:Function;
+		public static var onPurchaseError:Function;
 		
 		public static function authenticate(appID:String, appSecret:String, permissions:Array = null, onInitSuccess:Function = null, onInitFail:Function = null, onGetPermissions:Function = null):void
 		{
@@ -91,11 +97,49 @@ package com.reycogames.facebook
 			}
 		}
 		
+		public static function purchase( itemUrl:String, quantity:int, quantity_min:int = 0, quantity_max:int = 0 ):void
+		{
+			Facebook.ui("pay", 
+				{
+					action			: 	"purchaseitem", 
+					product			: 	itemUrl,
+					request_id		: 	getTimer(),
+					quantity		: 	quantity,
+					quantity_min	:	quantity - quantity_min,
+					quantity_max	:	quantity + quantity_max
+				}, handleItemPurchased);
+		}
+		
+		private static function handleItemPurchased( data:Object ):void
+		{
+			if( !data )
+			{
+				trace( "[FacebookForGames]", "There was an error processing your payment. Please try again." )
+			}
+			
+			if(data.error_code) 
+			{
+				if(data.error_code != 1383010) 
+				{
+					trace( "[FacebookForGames]", "There was an error processing your payment. " + data.error_message + ". Error code:" + data.error_code);
+				}
+				
+				if(onPurchaseError != null)
+					onPurchaseError.call( null, data );
+				
+				return;
+			}
+			
+			if(onPurchaseVerify != null)
+				onPurchaseVerify.call( null, data ); // quantity, status:initiated, completed, failed
+		}
+		
 		private static function getInitialUserFacebookData():void
 		{
 			var batch:Batch = new Batch();			
 			batch.add( "/me", handleGotUserData );
 			batch.add( "/me/permissions", handleGotPermissions );
+			batch.add( "/me/friends", handleGotFriends );
 			
 			Facebook.batchRequest( batch, handleGotUserFacebookInfo );
 		}
@@ -104,7 +148,7 @@ package com.reycogames.facebook
 		{
 			if( response )
 			{
-				FacebookGameModel.currentUser = FacebookUser.generate( response.body );
+				FacebookGameModel.USER = FacebookUser.generate( response.body );
 			}
 		}
 		
@@ -124,6 +168,27 @@ package com.reycogames.facebook
 						FacebookGameModel.PERMISSIONS.push( p );
 				}
 			}
+		}
+		
+		private static function handleGotFriends( response:Object ):void
+		{
+			FacebookGameModel.FRIENDS = response.body.data;
+		}
+		
+		public static function getUserCurrencyDetails():void
+		{
+			currencyLoader = new URLLoader();
+			currencyLoader.addEventListener(Event.COMPLETE, handleGotCurrency);
+			
+			currencyRequestnPath = currencyRequestnPath.split("{USER_ID}").join( FacebookGameModel.USER.id );
+			currencyRequestnPath = currencyRequestnPath.split("{USER_ACCESS_TOKEN}").join( FacebookGameModel.USER_ACCESS_TOKEN );
+			
+			currencyLoader.load(new URLRequest( currencyRequestnPath ));
+		}
+		
+		private static function handleGotCurrency( response:Object ):void
+		{
+			FacebookGameModel.CURRENCY_DETAILS = JSON.parse( String(response.currentTarget.data) );
 		}
 		
 		private static function handleGotUserFacebookInfo( response:Object ):void
@@ -154,8 +219,10 @@ package com.reycogames.facebook
 			appAccesTokenLoader.removeEventListener(Event.COMPLETE, handleGotAppAccessToken);
 			appAccesTokenLoader = null;
 			
+			getUserCurrencyDetails();
+			
 			if( FacebookForGames.onInitSuccess != null )
-				FacebookForGames.onInitSuccess.call( null, FacebookGameModel.currentUser );
+				FacebookForGames.onInitSuccess.call( null, FacebookGameModel.USER );
 		}
 	}
 }

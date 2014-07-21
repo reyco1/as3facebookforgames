@@ -45,7 +45,7 @@ package com.facebook.graph.core {
      *
      */
     public static var GRAPH_URL:String
-      = 'https://graph.facebook.com';
+      = 'https://graph.facebook.com/';
 
     /**
      * URL for calling old-style RESTful API methods.

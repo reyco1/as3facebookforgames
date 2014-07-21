@@ -20,7 +20,7 @@ package com.reycogames.facebook.manager
 			if(onPostFail != null) 
 				ShareManager.onPostFail = onPostFail;
 			
-			Facebook.api( "/"+ FacebookGameModel.currentUser.id +"/feed", handleShareComplete, properties.toObject(), "POST" );
+			Facebook.api( "/"+ FacebookGameModel.USER.id +"/feed", handleShareComplete, properties.toObject(), "POST" );
 		}
 		
 		private static function handleShareComplete( response:Object, fail:Object ):void
