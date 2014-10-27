@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
-  <includeClasses>
-    <classEntry path="com.reycogames.facebook.model.FacebookGameModel"/>
-    <classEntry path="com.reycogames.facebook.FacebookForGames"/>
-    <classEntry path="com.reycogames.facebook.data.FacebookUser"/>
-    <classEntry path="com.reycogames.facebook.data.PostToWallProperties"/>
-    <classEntry path="com.reycogames.facebook.data.Score"/>
-    <classEntry path="com.reycogames.facebook.manager.ShareManager"/>
-    <classEntry path="com.reycogames.facebook.manager.ScoreManager"/>
-  </includeClasses>
+  <includeClasses/>
   <includeResources/>
   <namespaceManifests/>
 </flexLibProperties>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="facebook_graph.as" projectUUID="f35602ce-2c7f-4670-a140-f92cf39fddd7" version="11">
+<actionScriptProperties analytics="false" mainApplicationPath="as3facebookforgames.as" projectUUID="5722ec97-16dd-4428-a40e-0bd3ee8a375b" version="11">
   <compiler additionalCompilerArguments="-locale en_US" autoRSLOrdering="true" copyDependentFiles="false" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" useFlashSDK="false" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="0">
@@ -13,12 +13,10 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="facebook_graph.as"/>
+    <application path="as3facebookforgames.as"/>
   </applications>
   <modules/>
   <workers/>
   <buildCSSFiles/>
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
 </actionScriptProperties>
-
-
